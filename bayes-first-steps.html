@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bayes First Steps</title>
+<title>Un engoque Basyesiano</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,7 +111,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Bayes First Steps</h1>
+<h1 class="title">Un engoque Basyesiano</h1>
 </div>
 
 
@@ -126,8 +126,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="un-enfoque-bayesiano" class="level1">
-<h1>Un enfoque Bayesiano</h1>
 <p>Por Miguel Ángel Castañeda Martínez</p>
 <div class="cell" data-execution_count="1">
 <details>
@@ -146,7 +144,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>poll_data <span class="op">=</span> pd.read_stata(<span class="st">'./pew_research_center_june_elect_wknd_data.dta'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Nos quedamos con las variables [<code>state</code>, <code>survey</code>, <code>ideo</code>]. * <code>state</code>: Estado en el que se realizaró la encuesta. * <code>survey</code>: Identificador de la encuesta aplicada en cada registro. * <code>ideo</code>: Ideología política del encuestado.</p>
+<p>Nos quedamos con las variables [<code>state</code>, <code>survey</code>, <code>ideo</code>].</p>
+<ul>
+<li><code>state</code>: Estado en el que se realizaró la encuesta.</li>
+<li><code>survey</code>: Identificador de la encuesta aplicada en cada registro.</li>
+<li><code>ideo</code>: Ideología política del encuestado.</li>
+</ul>
 <p><strong>Paso 1</strong>: Agrupamos los datos por estado para extraer las encuestas que se aplicaron a cada uno.</p>
 <div class="cell" data-execution_count="3">
 <details>
@@ -264,7 +267,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <hr>
-</section>
 </section>
 
 </main>
