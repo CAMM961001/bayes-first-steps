@@ -1,0 +1,4 @@
+- source: bayes-first-steps.ipynb
+  quarto-pub:
+    - id: 782d3e7f-9597-409c-9333-c25e64280322
+      url: 'https://quartopub.com/sites/camm961001/un-enfoque-bayesiano'
