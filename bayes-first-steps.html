@@ -141,9 +141,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 </div>
 <p>Por Miguel Ángel Castañeda Martínez.</p>
+<div style="text-align: justify">
 <p>Cuando empecé mi trayectoria como científico de datos tenía escaso conocimiento de lenguajes de programación, modelos de aprendizaje de máquina, análisis exploratorio de datos, etc. En un inicio imaginaba que la analítica de datos iba más por el camino de los sistemas, el poder computacional, y los algoritmos, pero nunca imaginé que tuviera algo que ver con estadística. Para mí la estadística era una materia más con la que se tenía que cumplir en la carrera, la veía como algo arcaico incluso tedioso. Poco imaginaba que años después terminaría siendo de mis temas favoritos, que encontraría fascinante el inmenso mundo del que se trata, y que me daría cuenta del enorme abanico de aplicaciones que tiene.</p>
 <p>En este breve artículo intento mostrar, con un ejemplo aplicado, las diferencias entre un enfoque frecuentista y un enfoque bayesiano. Cabe destacar que es la opinión de una persona que empieza a adentrarse en el mundo de la estadística bayesiana, que considera que la mejor manera de asimilar el conocimiento es compartiéndolo, y que por tanto está haciendo un esfuerzo por transmitir sus primeras impresiones e intuiciones del tema.</p>
 <p>El ejemplo que utilizaré para mostrar los conceptos es con datos de encuestas realizadas para la elección presidencial del 2008 en Estados Unidos, mismos que se pueden encontrar en el portal de <a href="https://www.pewresearch.org/">Pew Research Center</a>. Este ejemplo es una expansión de un trabajo realizado para la materia de <a href="https://tereom.github.io/fundamentos-2022/">Fundamentos de estadística</a> impartida en la <a href="https://mcdatos.itam.mx/es">Maestría en Ciencia de Datos</a> del <a href="https://www.itam.mx/">ITAM</a>, por quien rápidamente se posicionaría como una de las mejores profesoras que he tenido en mi trayectoria profesional, <a href="https://tereom.netlify.app/">Teresa Ortiz</a>.</p>
+</div>
 <section id="enfoque-frecuentista" class="level2">
 <h2 class="anchored" data-anchor-id="enfoque-frecuentista">Enfoque frecuentista</h2>
 <p>Primero se hace una inspección rápida de las encuestas para identificar variables de interés</p>
@@ -475,6 +477,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="bayes-first-steps_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
 </div>
 </div>
+<div style="text-align: justify">
 <p>La relevancia del panel anterior radica en que se puede ver con claridad el efecto de la verosimilitud de cada estado en la distribución inicial. Al considerar la misma inicial para todos los estados se está modelando el comportamiento promedio del país sobre cada uno de los estados. Sin embargo, al haber modelado la verosimilitud de cada estado de manera independiente, se puede ver que la posterior de cada uno tiene comportamientos distintos dependiendo de varios posibles factores, por ejemplo:</p>
 <ul>
 <li>Si la verosimilitud está por debajo de la inicial, entonces la posterior se mueve hacia la izquierda.</li>
@@ -483,6 +486,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Finalmente, en todos los casos se satisface que la posterior es un punto intermedio entre la inicial y la verosimilitud.</li>
 </ul>
 <p>Obtenemos el estimador de la posterior para todos los estados</p>
+</div>
 <div class="cell" data-execution_count="16">
 <details>
 <summary>Code</summary>
