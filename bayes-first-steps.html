@@ -145,6 +145,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Cuando empecé mi trayectoria como científico de datos tenía escaso conocimiento de lenguajes de programación, modelos de aprendizaje de máquina, análisis exploratorio de datos, etc. En un inicio imaginaba que la analítica de datos iba más por el camino de los sistemas, el poder computacional, y los algoritmos, pero nunca imaginé que tuviera algo que ver con estadística. Para mí la estadística era una materia más con la que se tenía que cumplir en la carrera, la veía como algo arcaico incluso tedioso. Poco imaginaba que años después terminaría siendo de mis temas favoritos, que encontraría fascinante el inmenso mundo del que se trata, y que me daría cuenta del enorme abanico de aplicaciones que tiene.</p>
 <p>En este breve artículo intento mostrar, con un ejemplo aplicado, las diferencias entre un enfoque frecuentista y un enfoque bayesiano. Cabe destacar que es la opinión de una persona que empieza a adentrarse en el mundo de la estadística bayesiana, que considera que la mejor manera de asimilar el conocimiento es compartiéndolo, y que por tanto está haciendo un esfuerzo por transmitir sus primeras impresiones e intuiciones del tema.</p>
 <p>El ejemplo que utilizaré para mostrar los conceptos es con datos de encuestas realizadas para la elección presidencial del 2008 en Estados Unidos, mismos que se pueden encontrar en el portal de <a href="https://www.pewresearch.org/">Pew Research Center</a>. Este ejemplo es una expansión de un trabajo realizado para la materia de <a href="https://tereom.github.io/fundamentos-2022/">Fundamentos de estadística</a> impartida en la <a href="https://mcdatos.itam.mx/es">Maestría en Ciencia de Datos</a> del <a href="https://www.itam.mx/">ITAM</a>, por quien rápidamente se posicionaría como una de las mejores profesoras que he tenido en mi trayectoria profesional, <a href="https://tereom.netlify.app/">Teresa Ortiz</a>.</p>
+<section id="el-problema" class="level2">
+<h2 class="anchored" data-anchor-id="el-problema">El problema</h2>
+<p>Como es bien sabido, la elección de Estados Unidos en el 2008 la ganó el candidato presidencial por el partido demócrata, Barack Obama. Para ilustrar ambos enfoques, se realizará una comparación entre la proporción de la población de cada estado que tiene ideología política “muy liberal” (en lo subsecuente <em>very liberal</em>), contra el porcentaje de votos que recibió Obama en cada estado.</p>
+<p>Para hacer dicha comparación se tienen dos conjuntos de datos, el primero de ellos es el de las encuestas realizadas a la ciuidadanía del país, para el cual se tienen las siguientes variables de interés:</p>
+<ul>
+<li><code>state</code>: Estado en el que se realizaró la encuesta.</li>
+<li><code>survey</code>: Identificador de la encuesta aplicada en cada registro.</li>
+<li><code>ideo</code>: Ideología política del encuestado.</li>
+</ul>
+</section>
 </div>
 <section id="enfoque-frecuentista" class="level2">
 <h2 class="anchored" data-anchor-id="enfoque-frecuentista">Enfoque frecuentista</h2>
@@ -185,10 +195,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prop <span class="op">=</span> pd.merge(left<span class="op">=</span>state,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a> right<span class="op">=</span>very_liberal,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a> how<span class="op">=</span><span class="st">'left'</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> on<span class="op">=</span><span class="st">'state'</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a> suffixes<span class="op">=</span>(<span class="st">'_total'</span>,<span class="st">'_very_lib'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                right<span class="op">=</span>very_liberal,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                how<span class="op">=</span><span class="st">'left'</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                on<span class="op">=</span><span class="st">'state'</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                suffixes<span class="op">=</span>(<span class="st">'_total'</span>,<span class="st">'_very_lib'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><strong>Paso 4</strong>: Se crean variables con la proporción de <em>very liberal</em> de máxima verosimilitud para cada estado.</p>
