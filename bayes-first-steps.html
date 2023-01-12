@@ -144,7 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div style="text-align: justify">
 <p>Cuando empecé mi trayectoria como científico de datos tenía escaso conocimiento de lenguajes de programación, modelos de aprendizaje de máquina, análisis exploratorio de datos, etc. En un inicio imaginaba que la analítica de datos iba más por el camino de los sistemas, el poder computacional, y los algoritmos, pero nunca imaginé que tuviera algo que ver con estadística. Para mí la estadística era una materia más con la que se tenía que cumplir en la carrera, la veía como algo arcaico incluso tedioso. Poco imaginaba que años después terminaría siendo de mis temas favoritos, que encontraría fascinante el inmenso mundo del que se trata, y que me daría cuenta del enorme abanico de aplicaciones que tiene.</p>
 <p>En este breve ensayo intento mostrar, con un ejemplo aplicado, las diferencias entre un enfoque frecuentista y un enfoque bayesiano. Cabe destacar que es la opinión de una persona que empieza a adentrarse en el mundo de la estadística bayesiana, que considera que la mejor manera de asimilar el conocimiento es compartiéndolo, y que por tanto está haciendo un esfuerzo por transmitir sus primeras impresiones e intuiciones del tema.</p>
-<p>El ejemplo que utilizaré para mostrar los conceptos es con datos de encuestas realizadas para la elección presidencial del 2008 en Estados Unidos, mismos que se pueden encontrar en el portal de <a href="https://www.pewresearch.org/">Pew Research Center</a>. Este ejemplo es una expansión de un trabajo realizado para la materia de <a href="https://tereom.github.io/fundamentos-2022/">Fundamentos de estadística</a> impartida en la <a href="https://mcdatos.itam.mx/es">Maestría en Ciencia de Datos</a> del <a href="https://www.itam.mx/">ITAM</a>, por quien rápidamente se posicionaría como una de las mejores profesoras que he tenido en mi trayectoria profesional, <a href="https://tereom.netlify.app/">Teresa Ortiz</a>.</p>
+<p>El ejemplo que utilizaré para mostrar los conceptos es con datos de encuestas realizadas para la elección presidencial del 2008 en Estados Unidos, mismos que se pueden encontrar en el portal de <a href="https://www.pewresearch.org/">Pew Research Center</a>. Este ejemplo fue extraido del libro <a href="http://www.stat.columbia.edu/~gelman/book/BDA3.pdf">Bayesian Data Analysis</a>, Andrew Gelman, 3° edición - p.&nbsp;61, y es una expansión de un trabajo realizado para la materia de <a href="https://tereom.github.io/fundamentos-2022/">Fundamentos de estadística</a> impartida en la <a href="https://mcdatos.itam.mx/es">Maestría en Ciencia de Datos</a> del <a href="https://www.itam.mx/">ITAM</a> , por quien rápidamente se posicionaría como una de las mejores profesoras que he tenido en mi trayectoria profesional, <a href="https://tereom.netlify.app/">Teresa Ortiz</a></p>
 <section id="el-problema" class="level2">
 <h2 class="anchored" data-anchor-id="el-problema">El problema</h2>
 <p>Como es bien sabido, la elección de Estados Unidos en el 2008 la ganó el candidato presidencial por el partido demócrata, Barack Obama. Se podría pensar que existe cierta correlación entre la proporción de votos que recibió Obama, con la proporción de votantes que se identifican liberales en cada estado, por lo que para ilustrar ambos enfoques, se realizará una comparación entre la proporción de la población de cada estado que tiene ideología política “muy liberal” (en lo subsecuente <em>very liberal</em>), contra el porcentaje de votos que recibió el candidato en cada estado.</p>
@@ -338,40 +338,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Dicho lo anterior, se pueden identificar claramente dos regiones tomando como referencia un <span class="math inline">\(50\%\)</span> de votos por Obama. Aproximadamente, desde este valor en adelante existe tendencia creciente en los votos que recibió el candidato, sin embargo, en los estados por debajo de esta referencia, la tendencia es contraria.</p>
 <p>Adicionalmente, también existen estados que rompen por completo las aparentes tendencias en dichas regiones. Esto se hace especialmente evidente en estados como Idaho, que presenta la mayor proporción de <em>very liberal</em> pero que en el resultado de las elecciones tuvo menos del <span class="math inline">\(37\%\)</span> de votantes por Obama; o como New Hampshire, que presenta la menor proporción de <em>very liberal</em> de todas, pero que en la elección tuvo casi el <span class="math inline">\(55\%\)</span> de votantes a favor del candidato</p>
 </div>
-<section id="enfoque-bayesiano" class="level2">
+<section id="enfoque-bayesiano" class="level2" style="text-align: justify">
 <h2 class="anchored" data-anchor-id="enfoque-bayesiano">Enfoque Bayesiano</h2>
-<p>Habiendo hablado del enfoque frecuentista, es tiempo de centrarse en el mismo análisis pero desde un punto de vista bayesiano.</p>
-<p>Estima el mismo porcentaje usando inferencia bayesiana, en particular la familia conjugada binomial-beta. Deberás estimar la proporción de manera independiente para cada estado, sin embargo, utilizarás la misma inicial a lo largo de todos.</p>
-<p>Nota: Este proceso para obtener los parámetros de la incial es razonable para este ejercicio, sin embargo, un modelo jerárquico sería la manera de formalizar este acercamiento y se estudiará en próximas materias.</p>
+<p>Habiendo hablado del enfoque frecuentista, es tiempo de centrarse en el mismo análisis pero desde un punto de vista bayesiano. Sin embargo, antes de adentrarse en el problema, primero es necesario partir de dos ideas fundamentales:</p>
+<ul>
+<li>La primera idea es que un enfoque bayesiano se apalanca de dos fuentes de información:
+<ul>
+<li>Una fuente es el conocimiento que se tiene acerca del problema. Un ejemplo del día a día es aquel en el que se tiene que decidir si llevar paraguas al salir de casa o no. ¿Cómo se toma una decisión al respecto? probablemente se podría voltear a ver al cielo y evaluar si está nublado o soleado, y con base en ello suponer si lloverá o no, sea cual sea el caso, se tiene que tomar una decisión basada en las suposiciones que se tienen del problema. A esta fuente de información se le conoce como <strong>inicial</strong>.</li>
+<li>Otra fuente es la información extraída de los datos que se tienen del problema. En el ejemplo de la lluvia, si se cuenta con datos meteorológicos que indican que se está en temporada de lluvias y a una hora determinada está indicado que lloverá, entonces lo más probable es que llueva. En este punto es en donde se conectan ambos enfoques, ya que esta fuente de información es la <strong>máxima verosimilitud</strong> vista en la sección anterior.</li>
+</ul></li>
+<li>La segunda idea es que en el mundo bayesiano, el conocimiento final o posterior será un punto intermedio entre las dos fuentes de información anteriores, es decir, la inicial y la verosimilitud. Dependiendo de qué tanta relevancia tenga cada una de ellas, será el qué tanto el conocimiento posterior se cargará hacia una u otra.</li>
+</ul>
+<p>Sabiendo lo anterior la pregunta natural sería entonces ¿cómo se controla la relevancia de la información?, y como en casi todos los problemas de analítica, la respuesta depende del contexto del problema:</p>
+<ul>
+<li>Si se tienen mucha confianza en la información inicial (por ejemplo una distribución normal con alta curtosis y poca varianza), entonces se trata de un problema con una inicial muy relevante, por ende, la verosimilitud necesitará una gran cantidad de datos para poder moverla.</li>
+<li>Si por el contrario se tiene poca confianza en la información inicial (por ejemplo una distribución uniforme), entonces se trata de un problema con nula relevancia en la inicial, por ende, no tomarán demasiados datos para que la verosimilitud la desplace.</li>
+</ul>
+<p>Para ilustrarlo se retoma entonces el problema de Obama, en particular, utilizando la familia conjugada binomial-beta. Cabe aclarar que, para esta primera comparación, utilizar una familia conjugada es con propósitos estrictamente ilustrativos sobre la diferencia entre los enfoques frecuentista y bayesiano, pero formalmente debería utilizarse un modelo jerárquico. Dicho eso, se puede visualizar la distribución de personas con ideología <em>very liberal</em> obtenidas con un enfoque frecuentista.</p>
+</section>
 <div class="cell" data-execution_count="5">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_beta_params(mu, var): </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> mu <span class="op">*</span> (<span class="op">-</span>mu<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> mu <span class="op">-</span> var) <span class="op">/</span> var</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> (mu <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> (mu<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> mu <span class="op">+</span> var) <span class="op">/</span> var</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [a, b]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p><strong>Paso 2</strong>: Inspeccionamos visualmente el comportamiento de las proporciones por estado.</p>
-<div class="cell" data-execution_count="6">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> prop[<span class="st">'prop_mle'</span>].mean()</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>s2 <span class="op">=</span> prop[<span class="st">'prop_mle'</span>].var()</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">5</span>))</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.hist(x<span class="op">=</span>prop[<span class="st">'prop_mle'</span>], color<span class="op">=</span><span class="st">'grey'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Proporciones por estado</span><span class="ch">\n</span><span class="ss">( $\mu$: </span><span class="sc">{</span>m<span class="sc">:.6f}</span><span class="ss">, $\sigma^2$: </span><span class="sc">{</span>s2<span class="sc">:.6f}</span><span class="ss"> )"</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'title'</span>])</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> prop[<span class="st">'prop_mle'</span>].mean()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>s2 <span class="op">=</span> prop[<span class="st">'prop_mle'</span>].var()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">5</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.hist(x<span class="op">=</span>prop[<span class="st">'prop_mle'</span>], color<span class="op">=</span><span class="st">'grey'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Distribución $very\_liberal$ por estado</span><span class="ch">\n</span><span class="ss">( $\mu$: </span><span class="sc">{</span>m<span class="sc">:.6f}</span><span class="ss">, $\sigma^2$: </span><span class="sc">{</span>s2<span class="sc">:.6f}</span><span class="ss"> )"</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'title'</span>])</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="bayes-first-steps_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+<p><img src="bayes-first-steps_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p><strong>Paso 3</strong>: Tomando la media y la varianza de la distribución anterior, obtenemos los valores <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> de la distribución inicial.</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_beta_params(mu, var): </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> mu <span class="op">*</span> (<span class="op">-</span>mu<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> mu <span class="op">-</span> var) <span class="op">/</span> var</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> (mu <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> (mu<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> mu <span class="op">+</span> var) <span class="op">/</span> var</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [a, b]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <div class="cell" data-execution_count="7">
 <details>
 <summary>Code</summary>
@@ -501,7 +513,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Lo primero que notamos es que bajo este enfoque se reduce la dispersión de los puntos, manifestando un comportamiento relativamente más lineal que con el enfoque frecuentista.</li>
 <li>Adicionalmente, se mantiene la tendencia de que a mayor proporción de <em>very liberal</em> en el estado mayor proporción de votos por Obama. Sin embargo, si bien la tendencia se mantiene la pendiente disminuye por la menor dispersión en los datos.</li>
 </ul>
-</section>
 <section id="anexo-2" class="level2">
 <h2 class="anchored" data-anchor-id="anexo-2">Anexo 2</h2>
 <p>Utilizando el paquete de python <code>sympy</code> para cálculo simbólico, se obtuvieron las ecuaciones que resulven los parámetros <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> de una distribución conjugada beta-binomial dados los valores de <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span>.</p>
