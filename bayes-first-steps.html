@@ -433,10 +433,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div style="text-align: justify">
-<p>De la visualización anterior es importante resaltar que, para todos los gráficos del panel, tanto la proporción de máxima verosimilitud (Línea verda) como la media de la inicial (Línea roja) toman los mismos valores. Sin embargo, se observa que efectivamente, la inicial tiene mayor peso sobre la verosimilitud a menor desviación estándar. Esto se ve tanto en la posición como en la dispersión de la posterior:</p>
+<p>De la visualización anterior es importante resaltar que, para todos los gráficos del panel, tanto la proporción de máxima verosimilitud (Línea verde) como la media de la inicial (Línea roja) toman los mismos valores. Sin embargo, se observa que efectivamente, la inicial tiene mayor peso sobre la posterior a menor desviación estándar. Esto se ve tanto en la posición como en la dispersión de la posterior:</p>
 <ul>
 <li>Para una desviación estándar <span class="math inline">\(\sigma=0.007\)</span>, la media de la posterior se encuentra aproximadamente en <span class="math inline">\(0.05\)</span>, mucho más cercana al valor de la inicial.</li>
-<li>Para la desviación estándar de referencia <span class="math inline">\(\sigma=0.018\)</span>, la media de la posterior se encuentra aproximadamente en <span class="math inline">\(0.075\)</span>, aproximadamente a la mitad entre la inicial y la verosimilitud.</li>
+<li>Para la desviación estándar de referencia <span class="math inline">\(\sigma=0.018\)</span>, la media de la posterior es cercana a <span class="math inline">\(0.075\)</span>, aproximadamente a la mitad entre la inicial y la verosimilitud.</li>
 <li>Para una desviación estándar <span class="math inline">\(\sigma=0.03\)</span>, la media de la posterior se encuentra aproximadamente en <span class="math inline">\(0.08\)</span>, mucho más cercana al valor de la verosimilitud.</li>
 </ul>
 <p>Ahora bien, una vez entendida la lógica detrás del enfoque bayesiano aplicado en un único estado, es tiempo de regresar al valor de referencia <span class="math inline">\(\sigma=0.018\)</span> y visualizar el comportamiento de todos los estados. Para ello, primero se pueden describir 9 estados de interés.</p>
@@ -493,7 +493,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div style="text-align: justify">
-<p>La relevancia del panel anterior radica en que se puede ver con claridad el efecto de la inicial, que parte de ser la misma para todos los estados, en la verosimilitud de cada uno de ellos. Al considerarlo de esta manera, se está modelando el comportamiento promedio del país sobre cada uno de los estados, sin embargo, al haber modelado la verosimilitud de cada estado de manera independiente, se puede ver que la posterior de cada uno tiene comportamientos distintos dependiendo de varios posibles factores. Tomando como referencia la media de la verosimilitud (Línea verde), entonces:</p>
+<p>La relevancia del panel anterior radica en que se puede ver con claridad el efecto de la inicial, que parte de ser la misma para todos los estados. Al considerarlo de esta manera, se está modelando el comportamiento promedio del país sobre cada uno de los estados, sin embargo, al haber modelado la verosimilitud de cada estado de manera independiente, se puede ver que la posterior de cada uno tiene comportamientos distintos dependiendo de varios posibles factores. Tomando como referencia la media de la verosimilitud (Línea verde), entonces:</p>
 <ul>
 <li>Si la verosimilitud está por debajo de la inicial, entonces la posterior se mueve hacia la derecha, como es el caso de New Hampshire o West Virginia.</li>
 <li>Por el contrario, si la verismilitud es mayor a la inicial entonces la posterior se recorre hacia la izquierda, como es el caso de Oregon o Idaho.</li>
@@ -501,7 +501,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>En contraste, si se trata de un estado con mucha representación en las encuestas, entonces la inicial no tiene gran efecto sobre la posterior dejándola muy parecida a la verosimilitud, como es el caso de California o Texas.</li>
 <li>Finalmente, cuando tanto la inicial como la verosimilitud son muy parecidas, entonces la posterior también lo es independientemente de su representación en las encuestas, como es el caso de Ohio, Alabama, o Tennessee.</li>
 </ul>
-<p>Así pues, nuevamente se visualiza la proporción de votos que tuvo obama contra la proporción de <em>very liberal</em> por estado, en esta ocasión utilizando ambos enfoques.</p>
+<p>Así pues, nuevamente se visualiza la proporción de votos que tuvo Obama contra la proporción de <em>very liberal</em> por estado, en esta ocasión utilizando ambos enfoques.</p>
 </div>
 <div class="cell" data-execution_count="8">
 <details>
@@ -540,16 +540,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="bayes-first-steps_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<ul>
-<li>Lo primero que notamos es que bajo este enfoque se reduce la dispersión de los puntos, manifestando un comportamiento relativamente más lineal que con el enfoque frecuentista.</li>
-<li>Adicionalmente, se mantiene la tendencia de que a mayor proporción de <em>very liberal</em> en el estado mayor proporción de votos por Obama. Sin embargo, si bien la tendencia se mantiene la pendiente disminuye por la menor dispersión en los datos.</li>
-</ul>
+<div style="text-align: justify">
+<p>Lo primero que se puede notar, es que bajo el enfoque bayesiano se reduce la dispersión de los puntos, manifestando un comportamiento relativamente más centrado en torno a un valor de referencia en <span class="math inline">\(\mu=0.045\)</span>, esto tiene sentido debido a que este enfoque partió de considerar la misma proporción de <em>very liberal</em> en todos los estados. Adicionalmente, de nueva cuenta se vuelve evidente que los estados que más desplazamiento sufrieron, fueron aquellos que tenían poca representación en las encuestas, o que originalmente se encontraban más alejados del valor de la inicial. Los estados que estaban por encima de <span class="math inline">\(\mu\)</span> bajaron, y los que se encontraban por debajo subieron.</p>
+<section id="finalmente" class="level2">
+<h2 class="anchored" data-anchor-id="finalmente">Finalmente</h2>
+<p>Con este sencillo ejemplo es posible darse cuenta de las diferencias que hay entre ambos enfoques. Al mismo tiempo, también se puede indentificar el enorme potencial que tiene un enfoque bayesiano ya que, en principio, incorpora mayor cantidad de información al respecto de un tema, no nada más los datos. Sin embargo, esta propiedad que en principio puediera ser una virtud, también es el punto débil del mundo bayesiano, debido a que si la información inicial es incorrecta o está sesgada hacia alguna opinión parcial, se puede caer en errores sumamente graves o tendenciosos. Es precisamente en este punto en el que está la mayor crítica a los enfoques bayesianos.</p>
+</section>
+</div>
+<hr>
+<div style="text-align: justify">
 <section id="anexo-1" class="level2">
 <h2 class="anchored" data-anchor-id="anexo-1">Anexo 1</h2>
+<p>Máxima verosimilitud de una distribución binomial (<span class="math inline">\(n=1\)</span>):</p>
+<p>Sean <span class="math inline">\(X = \{x_1,x_2,...,x_n\}\)</span> muestras de una variable aleatoria independiente e idénticamente distribuida que siguen una distribución <span class="math inline">\(x_i \backsim B(k=1, p=\theta)\)</span> siendo <span class="math inline">\(k\)</span> el número de repeticiones del experimento, entonces:</p>
+<p>Probabilidad:</p>
+<p><span class="math display">\[P(x_i|\theta)=\binom{1}{x_i}\theta^{x_i}(1-\theta)^{1-x_i}=\theta^{x_i}(1-\theta)^{1-x_i}\]</span></p>
+<p>Verosimilitud:</p>
+<p><span class="math display">\[L(\theta|X)=\prod_{i=1}^n P(x_i|\theta)=\prod_{i=1}^n\left[\theta^{x_i}(1-\theta)^{1-x_i}\right]\]</span></p>
+<p>Log-verosimilitud:</p>
+<p><span class="math display">\[ln[L(\theta|X)]=\sum_{i=1}^nln\left[\theta^{x_i}(1-\theta)^{1-x_i}\right]=ln\theta\sum x_i+ln(1-\theta)\sum(1-x_i)\]</span></p>
+<p>Derivando e igualando a cero:</p>
+<p><span class="math display">\[\frac{\partial}{\partial\theta}ln[L(\theta|X)]=\frac{1}{\theta}\sum x_i-\frac{1}{1-\theta}\sum(1-x_i)=0\]</span></p>
+<p><span class="math display">\[(1-\theta)\sum x_i-\theta\sum(1-x_i)=0\]</span></p>
+<p><span class="math display">\[\sum x_i - \theta n  = 0\]</span></p>
+<p><span class="math display">\[\therefore\theta=\frac{1}{n}\sum_{i=1}^n x_i=\bar x\]</span></p>
+<p>Es decir:</p>
+<p><span class="math display">\[\theta=\bar x\]</span></p>
 </section>
 <section id="anexo-2" class="level2">
 <h2 class="anchored" data-anchor-id="anexo-2">Anexo 2</h2>
 <p>Utilizando el módulo de python <code>sympy</code> para cálculo simbólico, se obtuvieron las ecuaciones que resulven los parámetros <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> de una distribución conjugada beta-binomial dados los valores de <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span>.</p>
+</section>
+</div>
 <div class="cell" data-execution_count="9">
 <details>
 <summary>Code</summary>
@@ -607,7 +629,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Las expresiones anteriores se puegen programar directamente en una función de python</p>
 <hr>
-</section>
 
 </main>
 <!-- /main column -->
