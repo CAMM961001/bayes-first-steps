@@ -340,21 +340,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <section id="enfoque-bayesiano" class="level2" style="text-align: justify">
 <h2 class="anchored" data-anchor-id="enfoque-bayesiano">Enfoque Bayesiano</h2>
-<p>Habiendo hablado del enfoque frecuentista, es tiempo de centrarse en el mismo análisis pero desde un punto de vista bayesiano. Sin embargo, antes de adentrarse en el problema, primero es necesario partir de dos ideas fundamentales:</p>
-<ul>
-<li>La primera idea es que un enfoque bayesiano se apalanca de dos fuentes de información:
-<ul>
-<li>Una fuente es el conocimiento que se tiene acerca del problema. Un ejemplo del día a día es aquel en el que se tiene que decidir si llevar paraguas al salir de casa o no. ¿Cómo se toma una decisión al respecto? probablemente se podría voltear a ver al cielo y evaluar si está nublado o soleado, y con base en ello suponer si lloverá o no, sea cual sea el caso, se tiene que tomar una decisión basada en las suposiciones que se tienen del problema. A esta fuente de información se le conoce como <strong>inicial</strong>.</li>
-<li>Otra fuente es la información extraída de los datos que se tienen del problema. En el ejemplo de la lluvia, si se cuenta con datos meteorológicos que indican que se está en temporada de lluvias y a una hora determinada está indicado que lloverá, entonces lo más probable es que llueva. En este punto es en donde se conectan ambos enfoques, ya que esta fuente de información es la <strong>máxima verosimilitud</strong> vista en la sección anterior.</li>
-</ul></li>
-<li>La segunda idea es que en el mundo bayesiano, el conocimiento final o posterior será un punto intermedio entre las dos fuentes de información anteriores, es decir, la inicial y la verosimilitud. Dependiendo de qué tanta relevancia tenga cada una de ellas, será el qué tanto el conocimiento posterior se cargará hacia una u otra.</li>
-</ul>
+<p>Habiendo hablado del enfoque frecuentista, es tiempo de centrarse en el mismo análisis pero desde un punto de vista bayesiano. Sin embargo, antes de adentrarse en el problema, primero es necesario partir de dos ideas fundamentales.</p>
+<p>La primera idea es que un enfoque bayesiano se apalanca de dos fuentes de información. Una fuente es el conocimiento que se tiene acerca del problema. Un ejemplo del día a día es aquel en el que se tiene que decidir si llevar paraguas al salir de casa o no. ¿Cómo se toma una decisión al respecto? probablemente se podría voltear a ver al cielo y evaluar si está nublado o soleado, y con base en ello suponer si lloverá o no, sea cual sea el caso, se tiene que tomar una decisión basada en las suposiciones que se tienen del problema. A esta fuente de información se le conoce como <strong>inicial</strong>.</p>
+<p>Otra fuente es la información extraída de los datos que se tienen del problema. En el ejemplo de la lluvia, si se cuenta con datos meteorológicos que indican que se está en temporada de lluvias y a una hora determinada está indicado que lloverá, entonces lo más probable es que llueva. En este punto es en donde se conectan ambos enfoques, ya que esta fuente de información es la <strong>máxima verosimilitud</strong> vista en la sección anterior.</p>
+<p>La segunda idea es que en el mundo bayesiano, el conocimiento final o posterior será un punto intermedio entre las dos fuentes de información anteriores, es decir, la inicial y la verosimilitud. Dependiendo de qué tanta relevancia tenga cada una de ellas, será el qué tanto el conocimiento posterior se cargará hacia una u otra.</p>
 <p>Sabiendo lo anterior la pregunta natural sería entonces ¿cómo se controla la relevancia de la información?, y como en casi todos los problemas de analítica, la respuesta depende del contexto del problema:</p>
 <ul>
 <li>Si se tienen mucha confianza en la información inicial (por ejemplo una distribución normal con alta curtosis y poca varianza), entonces se trata de un problema con una inicial muy relevante, por ende, la verosimilitud necesitará una gran cantidad de datos para poder moverla.</li>
 <li>Si por el contrario se tiene poca confianza en la información inicial (por ejemplo una distribución uniforme), entonces se trata de un problema con nula relevancia en la inicial, por ende, no tomarán demasiados datos para que la verosimilitud la desplace.</li>
 </ul>
-<p>Para ilustrarlo se retoma entonces el problema de Obama, en particular, utilizando la familia conjugada binomial-beta. Cabe aclarar que, para esta primera comparación, utilizar una familia conjugada es con propósitos estrictamente ilustrativos sobre la diferencia entre los enfoques frecuentista y bayesiano, pero formalmente debería utilizarse un modelo jerárquico. Dicho eso, se puede visualizar la distribución de personas con ideología <em>very liberal</em> obtenidas con un enfoque frecuentista.</p>
+<p>Para ilustrarlo se retoma entonces el problema de Obama, en particular, utilizando la familia conjugada binomial-beta. Esta familia tiene la gentileza de que, para un conocimiento inicial distribuido beta de un fenómeno que se distribuye binomial, el conocimiento posterior también es distribuido beta pero con parámetros ajustados (Las ecuaciones de estos nuevos parámetros se muestran en el Anexo 2). Cabe aclarar que, para esta primera comparación, utilizar una familia conjugada es con propósitos estrictamente ilustrativos, formalmente debería utilizarse un modelo jerárquico. Dicho eso, se puede visualizar la distribución de personas con ideología <em>very liberal</em> obtenidas con un enfoque frecuentista.</p>
 </section>
 <div class="cell" data-execution_count="5">
 <details>
@@ -365,7 +360,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">5</span>))</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.hist(x<span class="op">=</span>prop[<span class="st">'prop_mle'</span>], color<span class="op">=</span><span class="st">'grey'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Distribución $very\_liberal$ por estado</span><span class="ch">\n</span><span class="ss">( $\mu$: </span><span class="sc">{</span>m<span class="sc">:.6f}</span><span class="ss">, $\sigma^2$: </span><span class="sc">{</span>s2<span class="sc">:.6f}</span><span class="ss"> )"</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'title'</span>])</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Distribución $very\_liberal$ por estado</span><span class="ch">\n</span><span class="ss">( $\mu$: </span><span class="sc">{</span>m<span class="sc">:.4f}</span><span class="ss">, $\sigma$: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(s2)<span class="sc">:.4f}</span><span class="ss"> )"</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'title'</span>])</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -374,69 +369,119 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="bayes-first-steps_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p><strong>Paso 3</strong>: Tomando la media y la varianza de la distribución anterior, obtenemos los valores <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> de la distribución inicial.</p>
+<div style="text-align: justify">
+<p>En este caso, lo que se observa es que la distribución de personas de cada estado que se identifican <em>very liberal</em> bajo un enfoque frecuentista, tiene una media de <span class="math inline">\(\mu\approx 0.045\)</span> y desviación estándar <span class="math inline">\(\sigma\approx 0.018\)</span>. Se podría retomar la intuición de la sección anterior, es decir, cada uno de los estados es una representación del comportamiento general de todo el país, en donde el comportamiento general estaría centrado en <span class="math inline">\(\mu= 0.0459\)</span>.</p>
+<p>La idea en la que cada estado varía en mayor o menor medida de un valor central representa entonces el conocimiento inicial, queda definir su relevancia. En este caso, la relevancia queda dada por la desviación estándar de los datos, entre menor sea la desviación mayor será la influencia de la inicial sobre la posterior y viceversa. Se puede observar el efecto de la relevancia de la inicial comparando diferentes valores de <span class="math inline">\(\sigma\)</span>, para ello, arbitrariamente se puede escoger un estado (por ejemplo Idaho), y se va a utilizar como referencia la desviación de la gráfica anterior, es decir, <span class="math inline">\(\sigma=0.018\)</span>:</p>
+</div>
 <div class="cell" data-execution_count="6">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_beta_params(mu, var): </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> mu <span class="op">*</span> (<span class="op">-</span>mu<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> mu <span class="op">-</span> var) <span class="op">/</span> var</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> (mu <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> (mu<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> mu <span class="op">+</span> var) <span class="op">/</span> var</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [a, b]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Función para obtener parámetros de beta posterior</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_beta_params(mu, var): </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> mu <span class="op">*</span> (<span class="op">-</span>mu<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> mu <span class="op">-</span> var) <span class="op">/</span> var</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> (mu <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> (mu<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> mu <span class="op">+</span> var) <span class="op">/</span> var</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [a, b]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Parámetros de simulación</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>sims <span class="op">=</span> <span class="dv">1_000</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>var_list <span class="op">=</span> [<span class="fl">0.007</span><span class="op">**</span><span class="dv">2</span>, s2, <span class="fl">0.03</span><span class="op">**</span><span class="dv">2</span>]</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="bu">len</span>(var_list)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Parámetros de estado</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> prop.loc[<span class="dv">9</span>][<span class="st">'state'</span>]</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> prop.loc[<span class="dv">9</span>][<span class="st">'survey_total'</span>]</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> prop.loc[<span class="dv">9</span>][<span class="st">'survey_very_lib'</span>]</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#Parámetros de figura</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">5</span>))</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>spec <span class="op">=</span> plt.GridSpec(ncols<span class="op">=</span>k, nrows<span class="op">=</span><span class="dv">1</span>, hspace<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>ticks <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="fl">0.18</span>, <span class="fl">0.025</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(k):</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Parámetros de beta</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    a, b <span class="op">=</span> get_beta_params(m, var_list[idx])</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Distribución inicial</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    inicial <span class="op">=</span> beta.rvs(a<span class="op">=</span>a, b<span class="op">=</span>b, size<span class="op">=</span>sims)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    inicial_mean <span class="op">=</span> inicial.mean()</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Distribución posterior</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    posterior <span class="op">=</span> beta.rvs(a<span class="op">=</span>(a<span class="op">+</span>x), b<span class="op">=</span>(b<span class="op">+</span>n<span class="op">-</span>x), size<span class="op">=</span>sims)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Gráficas</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    ax_n <span class="op">=</span> <span class="ss">f"ax</span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    ax_n <span class="op">=</span> fig.add_subplot(spec[idx])</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    ax_n.hist(x<span class="op">=</span>inicial, bins<span class="op">=</span><span class="dv">25</span>, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>, label<span class="op">=</span><span class="st">'inicial'</span>)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    ax_n.hist(x<span class="op">=</span>posterior, bins<span class="op">=</span><span class="dv">25</span>, color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>, label<span class="op">=</span><span class="st">'posterior'</span>)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    ax_n.axvline(x<span class="op">=</span>inicial.mean(), color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'mean_inicial'</span>)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    ax_n.axvline(x<span class="op">=</span>posterior.mean(), color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'mean_post'</span>)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    ax_n.axvline(x<span class="op">=</span>prop.loc[<span class="dv">9</span>][<span class="st">'prop_mle'</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'mle'</span>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Anotaciones y estilo</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    ax_n.set_title(<span class="ss">f"$\sigma$: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(var_list[idx])<span class="sc">:.3f}</span><span class="ss">"</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'text'</span>])</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    ax_n.set_xlim(right<span class="op">=</span>ticks.<span class="bu">max</span>())</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    ax_n.set_xticks(ticks)</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    ax_n.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="co">#Anotaciones generales</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="ss">f"Comparación del efecto de $\sigma$ en la posterior, </span><span class="sc">{</span>state<span class="sc">.</span>title()<span class="sc">}</span><span class="ss">"</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'title'</span>])</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-display">
+<p><img src="bayes-first-steps_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
 </div>
+</div>
+<p>Se puede observar…</p>
 <div class="cell" data-execution_count="7">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>a, b <span class="op">=</span> get_beta_params(m, s2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p><strong>Paso 4</strong>: Comparamos las iniciales y las posteriores de 9 estados de interés</p>
-<div class="cell" data-execution_count="8">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Parámetros de simulación</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sims <span class="op">=</span> <span class="dv">1_000</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>inicial <span class="op">=</span> beta.rvs(a<span class="op">=</span>a, b<span class="op">=</span>b, size<span class="op">=</span>sims)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>inicial_mean <span class="op">=</span> inicial.mean()</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Parámetros de panel</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>panels <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>states_idx <span class="op">=</span> [<span class="dv">34</span>,<span class="dv">45</span>,<span class="dv">39</span>,<span class="dv">26</span>,<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">40</span>,<span class="dv">9</span>,<span class="dv">32</span>]</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Parámetros de figura</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>spec <span class="op">=</span> plt.GridSpec(ncols<span class="op">=</span>panels, nrows<span class="op">=</span>panels, hspace<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> states_idx:</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> prop.loc[idx][<span class="st">'state'</span>]</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Cálculo de la posterior</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> prop.loc[idx][<span class="st">'survey_total'</span>]</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> prop.loc[idx][<span class="st">'survey_very_lib'</span>]</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    posterior <span class="op">=</span> beta.rvs(a<span class="op">=</span>(a<span class="op">+</span>x), b<span class="op">=</span>(b<span class="op">+</span>n<span class="op">-</span>x), size<span class="op">=</span>sims)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Gráficas</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    ax_n <span class="op">=</span> <span class="ss">f"ax</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    ax_n <span class="op">=</span> fig.add_subplot(spec[k])</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    ax_n.hist(x<span class="op">=</span>inicial, bins<span class="op">=</span><span class="dv">25</span>, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>, label<span class="op">=</span><span class="st">'inicial'</span>)</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    ax_n.hist(x<span class="op">=</span>posterior, bins<span class="op">=</span><span class="dv">25</span>, color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>, label<span class="op">=</span><span class="st">'posterior'</span>)</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    ax_n.axvline(x<span class="op">=</span>inicial.mean(), color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'mean_inicial'</span>)</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    ax_n.axvline(x<span class="op">=</span>posterior.mean(), color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'mean_post'</span>)</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    ax_n.axvline(x<span class="op">=</span>prop.loc[idx][<span class="st">'prop_mle'</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'mle'</span>)</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Anotaciones y estilo</span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    ax_n.set_title(state.title(), fontsize<span class="op">=</span><span class="dv">14</span>)</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    ax_n.set_xlabel(<span class="st">''</span>)</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    ax_n.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    k <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="co">#Anotaciones generales.</span></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Parámetros de beta</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>a, b <span class="op">=</span> get_beta_params(m, s2)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Parámetros de simulación</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>sims <span class="op">=</span> <span class="dv">1_000</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>inicial <span class="op">=</span> beta.rvs(a<span class="op">=</span>a, b<span class="op">=</span>b, size<span class="op">=</span>sims)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>inicial_mean <span class="op">=</span> inicial.mean()</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Parámetros de panel</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>panels <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>states_idx <span class="op">=</span> [<span class="dv">34</span>,<span class="dv">45</span>,<span class="dv">39</span>,<span class="dv">26</span>,<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">40</span>,<span class="dv">9</span>,<span class="dv">32</span>]</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Parámetros de figura</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>spec <span class="op">=</span> plt.GridSpec(ncols<span class="op">=</span>panels, nrows<span class="op">=</span>panels, hspace<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> states_idx:</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> prop.loc[idx][<span class="st">'state'</span>]</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Cálculo de la posterior</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> prop.loc[idx][<span class="st">'survey_total'</span>]</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> prop.loc[idx][<span class="st">'survey_very_lib'</span>]</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    posterior <span class="op">=</span> beta.rvs(a<span class="op">=</span>(a<span class="op">+</span>x), b<span class="op">=</span>(b<span class="op">+</span>n<span class="op">-</span>x), size<span class="op">=</span>sims)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Gráficas</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    ax_n <span class="op">=</span> <span class="ss">f"ax</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    ax_n <span class="op">=</span> fig.add_subplot(spec[k])</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    ax_n.hist(x<span class="op">=</span>inicial, bins<span class="op">=</span><span class="dv">25</span>, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>, label<span class="op">=</span><span class="st">'inicial'</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    ax_n.hist(x<span class="op">=</span>posterior, bins<span class="op">=</span><span class="dv">25</span>, color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>, label<span class="op">=</span><span class="st">'posterior'</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    ax_n.axvline(x<span class="op">=</span>inicial.mean(), color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'mean_inicial'</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    ax_n.axvline(x<span class="op">=</span>posterior.mean(), color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'mean_post'</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    ax_n.axvline(x<span class="op">=</span>prop.loc[idx][<span class="st">'prop_mle'</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'mle'</span>)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Anotaciones y estilo</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    ax_n.set_title(state.title(), fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    ax_n.set_xlabel(<span class="st">''</span>)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    ax_n.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    k <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="co">#Anotaciones generales.</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="bayes-first-steps_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+<p><img src="bayes-first-steps_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <div style="text-align: justify">
@@ -449,133 +494,136 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Obtenemos el estimador de la posterior para todos los estados</p>
 </div>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="8">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Se crea columna vacía en dataframe</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>prop[<span class="st">'prop_bayes'</span>] <span class="op">=</span> np.nan</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> prop.index:</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Cálculo de la posterior</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> prop.loc[idx][<span class="st">'survey_total'</span>]</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> prop.loc[idx][<span class="st">'survey_very_lib'</span>]</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    posterior_mean <span class="op">=</span> beta.rvs(a<span class="op">=</span>(a<span class="op">+</span>x), b<span class="op">=</span>(b<span class="op">+</span>n<span class="op">-</span>x), size<span class="op">=</span>sims).mean()</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    prop.loc[prop.index <span class="op">==</span> idx, <span class="st">'prop_bayes'</span>] <span class="op">=</span> posterior_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Se crea columna vacía en dataframe</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>prop[<span class="st">'prop_bayes'</span>] <span class="op">=</span> np.nan</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> prop.index:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Cálculo de la posterior</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> prop.loc[idx][<span class="st">'survey_total'</span>]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> prop.loc[idx][<span class="st">'survey_very_lib'</span>]</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    posterior_mean <span class="op">=</span> beta.rvs(a<span class="op">=</span>(a<span class="op">+</span>x), b<span class="op">=</span>(b<span class="op">+</span>n<span class="op">-</span>x), size<span class="op">=</span>sims).mean()</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    prop.loc[prop.index <span class="op">==</span> idx, <span class="st">'prop_bayes'</span>] <span class="op">=</span> posterior_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Comparamos el desplazamiento del estimador MLE provocado por la distribucón inicial bajo un enfoque bayesiano</p>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>plot_settings[<span class="st">'figsize'</span>])</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(x<span class="op">=</span>prop[<span class="st">'survey_total'</span>], y<span class="op">=</span>prop[<span class="st">'prop_mle'</span>], color<span class="op">=</span><span class="st">'tab:blue'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'mle'</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(x<span class="op">=</span>prop[<span class="st">'survey_total'</span>], y<span class="op">=</span>prop[<span class="st">'prop_bayes'</span>], color<span class="op">=</span><span class="st">'tab:green'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'bayes'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> prop.index:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> prop.loc[idx][<span class="st">'survey_total'</span>]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    y_mle <span class="op">=</span> prop.loc[idx][<span class="st">'prop_mle'</span>]</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    y_bayes <span class="op">=</span> prop.loc[idx][<span class="st">'prop_bayes'</span>]</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    plt.plot([x,x], [y_mle, y_bayes], color<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparación de estimadores de proporción'</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'title'</span>])</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Recuento de votos por estado'</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'text'</span>])</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>plt.legend(fontsize<span class="op">=</span>plot_settings[<span class="st">'annotation'</span>], loc<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="bayes-first-steps_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Nuevamente graficamos la proporción de votos que tuvo obama contra la proporción de <em>very liberal</em> por estado, en esta ocasión con los resultados del enfoque bayesiano.</p>
 <div class="cell" data-execution_count="10">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>plot_settings[<span class="st">'figsize'</span>])</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(x<span class="op">=</span>prop[<span class="st">'survey_total'</span>], y<span class="op">=</span>prop[<span class="st">'prop_mle'</span>], color<span class="op">=</span><span class="st">'tab:blue'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'mle'</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(x<span class="op">=</span>prop[<span class="st">'survey_total'</span>], y<span class="op">=</span>prop[<span class="st">'prop_bayes'</span>], color<span class="op">=</span><span class="st">'tab:green'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'bayes'</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(x<span class="op">=</span>prop[<span class="st">'vote_Obama_pct'</span>]<span class="op">/</span><span class="dv">100</span>, y<span class="op">=</span>prop[<span class="st">'prop_mle'</span>], color<span class="op">=</span><span class="st">'red'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'mle'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(x<span class="op">=</span>prop[<span class="st">'vote_Obama_pct'</span>]<span class="op">/</span><span class="dv">100</span>, y<span class="op">=</span>prop[<span class="st">'prop_bayes'</span>], color<span class="op">=</span><span class="st">'blue'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'bayes'</span>)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> prop.index:</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> prop.loc[idx][<span class="st">'survey_total'</span>]</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    y_mle <span class="op">=</span> prop.loc[idx][<span class="st">'prop_mle'</span>]</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    y_bayes <span class="op">=</span> prop.loc[idx][<span class="st">'prop_bayes'</span>]</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    plt.plot([x,x], [y_mle, y_bayes], color<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparando los votos por Obama contra la proporción very liberal Bayes'</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'title'</span>])</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Proporción de votos por Obama'</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'text'</span>])</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Proporción de very liberal Bayes'</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'text'</span>])</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>plt.legend(fontsize<span class="op">=</span>plot_settings[<span class="st">'annotation'</span>], loc<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparación de estimadores de proporción'</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'title'</span>])</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Recuento de votos por estado'</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'text'</span>])</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.legend(fontsize<span class="op">=</span>plot_settings[<span class="st">'annotation'</span>], loc<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <p><img src="bayes-first-steps_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
-</div>
-</div>
-<p>Nuevamente graficamos la proporción de votos que tuvo obama contra la proporción de <em>very liberal</em> por estado, en esta ocasión con los resultados del enfoque bayesiano.</p>
-<div class="cell" data-execution_count="11">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>plot_settings[<span class="st">'figsize'</span>])</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(x<span class="op">=</span>prop[<span class="st">'vote_Obama_pct'</span>]<span class="op">/</span><span class="dv">100</span>, y<span class="op">=</span>prop[<span class="st">'prop_mle'</span>], color<span class="op">=</span><span class="st">'red'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'mle'</span>, alpha<span class="op">=</span><span class="fl">0.25</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(x<span class="op">=</span>prop[<span class="st">'vote_Obama_pct'</span>]<span class="op">/</span><span class="dv">100</span>, y<span class="op">=</span>prop[<span class="st">'prop_bayes'</span>], color<span class="op">=</span><span class="st">'blue'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'bayes'</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparando los votos por Obama contra la proporción very liberal Bayes'</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'title'</span>])</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Proporción de votos por Obama'</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'text'</span>])</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Proporción de very liberal Bayes'</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'text'</span>])</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.legend(fontsize<span class="op">=</span>plot_settings[<span class="st">'annotation'</span>], loc<span class="op">=</span><span class="dv">4</span>)</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="bayes-first-steps_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <ul>
 <li>Lo primero que notamos es que bajo este enfoque se reduce la dispersión de los puntos, manifestando un comportamiento relativamente más lineal que con el enfoque frecuentista.</li>
 <li>Adicionalmente, se mantiene la tendencia de que a mayor proporción de <em>very liberal</em> en el estado mayor proporción de votos por Obama. Sin embargo, si bien la tendencia se mantiene la pendiente disminuye por la menor dispersión en los datos.</li>
 </ul>
+<section id="anexo-1" class="level2">
+<h2 class="anchored" data-anchor-id="anexo-1">Anexo 1</h2>
+</section>
 <section id="anexo-2" class="level2">
 <h2 class="anchored" data-anchor-id="anexo-2">Anexo 2</h2>
 <p>Utilizando el paquete de python <code>sympy</code> para cálculo simbólico, se obtuvieron las ecuaciones que resulven los parámetros <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> de una distribución conjugada beta-binomial dados los valores de <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span>.</p>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sympy <span class="im">import</span> symbols, Eq, solve</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sympy.abc <span class="im">import</span> mu, sigma</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <div class="cell" data-execution_count="12">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sympy <span class="im">import</span> symbols, Eq, solve</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sympy.abc <span class="im">import</span> mu, sigma</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>a, b, s2, m <span class="op">=</span> symbols(<span class="st">"a b sigma^2 mu"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>equation_1 <span class="op">=</span> Eq( a <span class="op">/</span> (a<span class="op">+</span>b), m )</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>equation_2 <span class="op">=</span> Eq( a<span class="op">*</span>b <span class="op">/</span> ((a<span class="op">+</span>b)<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> (a <span class="op">+</span> b <span class="op">+</span> <span class="dv">1</span>)), s2 )</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> solve((equation_1, equation_2), (a, b))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="13">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>a, b, s2, m <span class="op">=</span> symbols(<span class="st">"a b sigma^2 mu"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>equation_1 <span class="op">=</span> Eq( a <span class="op">/</span> (a<span class="op">+</span>b), m )</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>equation_2 <span class="op">=</span> Eq( a<span class="op">*</span>b <span class="op">/</span> ((a<span class="op">+</span>b)<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> (a <span class="op">+</span> b <span class="op">+</span> <span class="dv">1</span>)), s2 )</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> solve((equation_1, equation_2), (a, b))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>equation_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<p><span class="math inline">\(\displaystyle \frac{a}{a + b} = \mu\)</span></p>
+</div>
 </div>
 <div class="cell" data-execution_count="14">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>equation_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>equation_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="14">
-<p><span class="math inline">\(\displaystyle \frac{a}{a + b} = \mu\)</span></p>
+<p><span class="math inline">\(\displaystyle \frac{a b}{\left(a + b\right)^{2} \left(a + b + 1\right)} = \sigma^{2}\)</span></p>
 </div>
 </div>
 <div class="cell" data-execution_count="15">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>equation_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="15">
-<p><span class="math inline">\(\displaystyle \frac{a b}{\left(a + b\right)^{2} \left(a + b + 1\right)} = \sigma^{2}\)</span></p>
-</div>
-</div>
-<div class="cell" data-execution_count="16">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Solución para el parámetro 'a':</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>solution[<span class="dv">0</span>][<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Solución para el parámetro 'a':</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>solution[<span class="dv">0</span>][<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Solución para el parámetro 'a':
 </code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="16">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <p><span class="math inline">\(\displaystyle \frac{\mu \left(- \mu^{2} + \mu - \sigma^{2}\right)}{\sigma^{2}}\)</span></p>
 </div>
 </div>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="16">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Solución para el parámetro 'b':</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>solution[<span class="dv">0</span>][<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Solución para el parámetro 'b':</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>solution[<span class="dv">0</span>][<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Solución para el parámetro 'b':
 </code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <p><span class="math inline">\(\displaystyle \frac{\left(\mu - 1\right) \left(\mu^{2} - \mu + \sigma^{2}\right)}{\sigma^{2}}\)</span></p>
 </div>
 </div>
