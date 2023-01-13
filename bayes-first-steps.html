@@ -346,7 +346,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>La segunda idea es que en el mundo bayesiano, el conocimiento final o posterior será un punto intermedio entre las dos fuentes de información anteriores, es decir, la inicial y la verosimilitud. Dependiendo de qué tanta relevancia tenga cada una de ellas, será el qué tanto el conocimiento posterior se cargará hacia una u otra.</p>
 <p>Sabiendo lo anterior la pregunta natural sería entonces ¿cómo se controla la relevancia de la información?, y como en casi todos los problemas de analítica, la respuesta depende del contexto del problema:</p>
 <ul>
-<li>Si se tienen mucha confianza en la información inicial (por ejemplo una distribución normal con alta curtosis y poca varianza), entonces se trata de un problema con una inicial muy relevante, por ende, la verosimilitud necesitará una gran cantidad de datos para poder moverla.</li>
+<li>Si se tiene mucha confianza en la información inicial (por ejemplo una distribución normal con alta curtosis y poca varianza), entonces se trata de un problema con una inicial muy relevante, por ende, la verosimilitud necesitará una gran cantidad de datos para poder moverla.</li>
 <li>Si por el contrario se tiene poca confianza en la información inicial (por ejemplo una distribución uniforme), entonces se trata de un problema con poca relevancia en la inicial, por ende, no tomarán demasiados datos para que la verosimilitud la desplace.</li>
 </ul>
 <p>Para ilustrarlo se retoma entonces el problema de Obama, en particular, utilizando la familia conjugada binomial-beta. Esta familia tiene la gentileza de que, para un conocimiento inicial distribuido beta de un fenómeno que se distribuye binomial, el conocimiento posterior también es distribuido beta pero con parámetros ajustados (Las ecuaciones de estos nuevos parámetros se muestran en el Anexo 2). Cabe aclarar que, para esta primera comparación, utilizar una familia conjugada es con propósitos estrictamente ilustrativos, formalmente debería utilizarse un modelo jerárquico. Dicho eso, se puede visualizar la distribución de personas con ideología <em>very liberal</em> obtenidas con un enfoque frecuentista.</p>
@@ -627,7 +627,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math inline">\(\displaystyle \frac{\left(\mu - 1\right) \left(\mu^{2} - \mu + \sigma^{2}\right)}{\sigma^{2}}\)</span></p>
 </div>
 </div>
-<p>Las expresiones anteriores se puegen programar directamente en una función de python</p>
+<p>Las expresiones anteriores se pueden programar directamente en una función de python</p>
 <hr>
 
 </main>
