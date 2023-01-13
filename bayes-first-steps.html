@@ -336,7 +336,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div style="text-align: justify">
 <p>Antes de hablar con detalle de los aspectos interesantes de la visualización anterior, primero hay que aclarar que si bajo este enfoque existiera correlación entre ambas características, entonces se esperaría tener una tendencia creciente hacia arriba a la derecha, es decir, a mayor porcentaje de votos por Obama mayor porcentaje de personas <em>very liberal</em>. Esto, como lo hace evidente la gráfica, no sucede.</p>
 <p>Dicho lo anterior, se pueden identificar claramente dos regiones tomando como referencia un <span class="math inline">\(50\%\)</span> de votos por Obama. Aproximadamente, desde este valor en adelante existe tendencia creciente en los votos que recibió el candidato, sin embargo, en los estados por debajo de esta referencia, la tendencia es contraria.</p>
-<p>Adicionalmente, también existen estados que rompen por completo las aparentes tendencias en dichas regiones. Esto se hace especialmente evidente en estados como Idaho, que presenta la mayor proporción de <em>very liberal</em> pero que en el resultado de las elecciones tuvo menos del <span class="math inline">\(37\%\)</span> de votantes por Obama; o como New Hampshire, que presenta la menor proporción de <em>very liberal</em> de todas, pero que en la elección tuvo casi el <span class="math inline">\(55\%\)</span> de votantes a favor del candidato</p>
+<p>Adicionalmente, también existen estados que rompen por completo las aparentes tendencias en dichas regiones. Esto se hace especialmente evidente en estados como Idaho, que presenta la mayor proporción de <em>very liberal</em> pero que en el resultado de las elecciones tuvo menos del <span class="math inline">\(37\%\)</span> de votantes por Obama; o como New Hampshire, que presenta la menor proporción de <em>very liberal</em> de todas, pero que en la elección tuvo casi el <span class="math inline">\(55\%\)</span> de votantes a favor del candidato.</p>
 </div>
 <section id="enfoque-bayesiano" class="level2" style="text-align: justify">
 <h2 class="anchored" data-anchor-id="enfoque-bayesiano">Enfoque Bayesiano</h2>
@@ -347,7 +347,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Sabiendo lo anterior la pregunta natural sería entonces ¿cómo se controla la relevancia de la información?, y como en casi todos los problemas de analítica, la respuesta depende del contexto del problema:</p>
 <ul>
 <li>Si se tienen mucha confianza en la información inicial (por ejemplo una distribución normal con alta curtosis y poca varianza), entonces se trata de un problema con una inicial muy relevante, por ende, la verosimilitud necesitará una gran cantidad de datos para poder moverla.</li>
-<li>Si por el contrario se tiene poca confianza en la información inicial (por ejemplo una distribución uniforme), entonces se trata de un problema con nula relevancia en la inicial, por ende, no tomarán demasiados datos para que la verosimilitud la desplace.</li>
+<li>Si por el contrario se tiene poca confianza en la información inicial (por ejemplo una distribución uniforme), entonces se trata de un problema con poca relevancia en la inicial, por ende, no tomarán demasiados datos para que la verosimilitud la desplace.</li>
 </ul>
 <p>Para ilustrarlo se retoma entonces el problema de Obama, en particular, utilizando la familia conjugada binomial-beta. Esta familia tiene la gentileza de que, para un conocimiento inicial distribuido beta de un fenómeno que se distribuye binomial, el conocimiento posterior también es distribuido beta pero con parámetros ajustados (Las ecuaciones de estos nuevos parámetros se muestran en el Anexo 2). Cabe aclarar que, para esta primera comparación, utilizar una familia conjugada es con propósitos estrictamente ilustrativos, formalmente debería utilizarse un modelo jerárquico. Dicho eso, se puede visualizar la distribución de personas con ideología <em>very liberal</em> obtenidas con un enfoque frecuentista.</p>
 </section>
@@ -418,7 +418,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    ax_n.axvline(x<span class="op">=</span>prop.loc[<span class="dv">9</span>][<span class="st">'prop_mle'</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'mle'</span>)</span>
 <span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Anotaciones y estilo</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    ax_n.set_title(<span class="ss">f"$\sigma$: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(var_list[idx])<span class="sc">:.3f}</span><span class="ss">"</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'text'</span>])</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    ax_n.set_title(<span class="ss">f"$\sigma$ = </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(var_list[idx])<span class="sc">:.3f}</span><span class="ss">"</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'text'</span>])</span>
 <span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    ax_n.set_xlim(right<span class="op">=</span>ticks.<span class="bu">max</span>())</span>
 <span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    ax_n.set_xticks(ticks)</span>
 <span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    ax_n.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
@@ -432,7 +432,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="bayes-first-steps_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>Se puede observar…</p>
+<div style="text-align: justify">
+<p>De la visualización anterior es importante resaltar que, para todos los gráficos del panel, tanto la proporción de máxima verosimilitud (Línea verda) como la media de la inicial (Línea roja) toman los mismos valores. Sin embargo, se observa que efectivamente, la inicial tiene mayor peso sobre la verosimilitud a menor desviación estándar. Esto se ve tanto en la posición como en la dispersión de la posterior:</p>
+<ul>
+<li>Para una desviación estándar <span class="math inline">\(\sigma=0.007\)</span>, la media de la posterior se encuentra aproximadamente en <span class="math inline">\(0.05\)</span>, mucho más cercana al valor de la inicial.</li>
+<li>Para la desviación estándar de referencia <span class="math inline">\(\sigma=0.018\)</span>, la media de la posterior se encuentra aproximadamente en <span class="math inline">\(0.075\)</span>, aproximadamente a la mitad entre la inicial y la verosimilitud.</li>
+<li>Para una desviación estándar <span class="math inline">\(\sigma=0.03\)</span>, la media de la posterior se encuentra aproximadamente en <span class="math inline">\(0.08\)</span>, mucho más cercana al valor de la verosimilitud.</li>
+</ul>
+<p>Ahora bien, una vez entendida la lógica detrás del enfoque bayesiano aplicado en un único estado, es tiempo de regresar al valor de referencia <span class="math inline">\(\sigma=0.018\)</span> y visualizar el comportamiento de todos los estados. Para ello, primero se pueden describir 9 estados de interés:</p>
+</div>
 <div class="cell" data-execution_count="7">
 <details>
 <summary>Code</summary>
@@ -450,7 +458,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Parámetros de figura</span></span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">15</span>))</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>spec <span class="op">=</span> plt.GridSpec(ncols<span class="op">=</span>panels, nrows<span class="op">=</span>panels, hspace<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>spec <span class="op">=</span> plt.GridSpec(ncols<span class="op">=</span>panels, nrows<span class="op">=</span>panels)</span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> states_idx:</span>
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    state <span class="op">=</span> prop.loc[idx][<span class="st">'state'</span>]</span>
@@ -470,14 +478,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    ax_n.axvline(x<span class="op">=</span>prop.loc[idx][<span class="st">'prop_mle'</span>], color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'mle'</span>)</span>
 <span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Anotaciones y estilo</span></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    ax_n.set_title(state.title(), fontsize<span class="op">=</span><span class="dv">14</span>)</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    ax_n.set_xlabel(<span class="st">''</span>)</span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    ax_n.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    k <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    ax_n.set_title(state.title(), fontsize<span class="op">=</span>plot_settings[<span class="st">'text'</span>])</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    ax_n.grid(alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    k <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="co">#Anotaciones generales.</span></span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="ss">f"Comparación de diversos estados bajo $\sigma$ = </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(s2)<span class="sc">:.3f}</span><span class="ss">"</span>, fontsize<span class="op">=</span>plot_settings[<span class="st">'title'</span>])</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
