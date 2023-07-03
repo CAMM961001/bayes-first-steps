@@ -1,0 +1,15 @@
+project:
+  type: book
+
+book:
+  chapters:
+    - index.qmd
+    - chapters/english.qmd
+
+format:
+  html:
+    theme: cosmo
+    code-fold: true
+
+execute:
+  freexe: auto
