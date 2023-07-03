@@ -1,0 +1,110 @@
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from scipy.stats import beta
+
+plot_settings = {'title':12, 'text':10, 'annotation':6, 'figsize':(8,5)}
+```
+
+# Un enfoque bayesiano {-}
+
+Por [Miguel Ángel Castañeda Martínez.](https://www.linkedin.com/in/miguel-angel-castaneda-martinez-b0a566142?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3Bf123JtydS%2BmP67Z1hcyFDg%3D%3D)
+
+## Introducción {-}
+
+<div style="text-align: justify">
+Cuando empecé mi trayectoria como científico de datos tenía escaso conocimiento de lenguajes de programación, modelos de aprendizaje de máquina, análisis exploratorio de datos, etc. En un inicio imaginaba que la analítica de datos iba más por el camino de los sistemas, el poder computacional, y los algoritmos, pero nunca imaginé que tuviera algo que ver con estadística. Para mí la estadística era una materia más con la que se tenía que cumplir en la carrera, la veía como algo arcaico incluso tedioso. Poco imaginaba que años después terminaría siendo de mis temas favoritos, que encontraría fascinante el inmenso mundo del que se trata, y que me daría cuenta del enorme abanico de aplicaciones que tiene.
+
+En este breve ensayo intento mostrar, con un ejemplo aplicado, las diferencias entre un enfoque frecuentista y un enfoque bayesiano. Cabe destacar que es la opinión de una persona que empieza a adentrarse en el mundo de la estadística bayesiana, que considera que la mejor manera de asimilar el conocimiento es compartiéndolo, y que por tanto está haciendo un esfuerzo por transmitir sus primeras impresiones e intuiciones del tema.
+
+El ejemplo que utilizaré para mostrar los conceptos es con datos de encuestas realizadas para la elección presidencial del 2008 en Estados Unidos, mismos que se pueden encontrar en el portal de [Pew Research Center](https://www.pewresearch.org/). Este ejemplo fue extraido del libro [Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/BDA3.pdf), Andrew Gelman, 3° edición - p. 61, y es una expansión de un trabajo realizado para la materia de [Fundamentos de estadística](https://tereom.github.io/fundamentos-2022/) impartida en la [Maestría en Ciencia de Datos](https://mcdatos.itam.mx/es) del [ITAM](https://www.itam.mx/) , por quien rápidamente se posicionaría como una de las mejores profesoras que he tenido en mi trayectoria profesional, [Teresa Ortiz](https://tereom.netlify.app/)
+</div>
+
+## El problema {-}
+
+<div style="text-align: justify">
+Como es bien sabido, la elección de Estados Unidos en el 2008 la ganó el candidato presidencial por el partido demócrata, Barack Obama. Se podría pensar que existe cierta correlación entre la proporción de votos que recibió Obama, con la proporción de votantes que se identifican liberales en cada estado, por lo que para ilustrar ambos enfoques, se realizará una comparación entre la proporción de la población de cada estado que tiene ideología política "muy liberal" (en lo subsecuente _very liberal_), contra el porcentaje de votos que recibió el candidato en cada estado.
+
+Para hacer dicha comparación se tienen dos conjuntos de datos, el primero de ellos es el de las encuestas realizadas a la ciudadanía del país, para el cual cada registro es una persona encuestada, y son de interés las siguientes variables:
+
+* `state`: Estado en el que se realizó la encuesta.
+* `survey`: Identificador de la encuesta aplicada en cada registro.
+* `ideo`: Ideología política del encuestado.
+
+El segundo de ellos contiene los resultados de la elección por estado, para el cual el foco de atención estará en las variables a continuación:
+
+* `state`: Estado de referencia.
+* `vote_Obama_pct`: Porcentaje de votos por Obama.
+</div>
+
+# Enfoque Frecuentista {-}
+
+<div style="text-align: justify">
+Para la primera parte del análisis se obtendrá la proporción de la población que se identifica _very liberal_ utilizando un enfoque frecuentista, es decir, se puede obtener la proporción de máxima verosimilitud utilizando una distribución binomial. Para ello, se puede ver a cada uno de los $n$ encuestados de un estado en particular $X = \{x_1,x_2,...,x_n\}$, como $n$ muestras de una variable aleatoria independiente e idénticamente distribuida, y que siguen una distribución $x_i \backsim B(k=1, p=\theta)$, en donde una persona con dicha ideología es considerada como un éxito bajo una binomial.
+
+El estimador de máxima verosimilitud para una distribución binomial bajo $k=1$ está dada por:
+
+$$\theta = \bar x$$
+
+En el caso del ejemplo, se puede obtener dicho estimador de proporción (`prop_mle`) utilizando el total de las encuestas realizadas en un estado (`survey_total`), y el total de encuestados que se identificaron _very liberal_ (`survey_very_lib`) en su ideología política. Esto se observa con mayor detalle en la siguiente tabla, misma que por simplicidad solamente muestra los primeros cinco estados.
+
+**Nota**: La demostración del estimador $\theta$ se puede encontrar en el Anexo 1.
+</div>
+
+```{python}
+#Carga de datos de encuestas
+poll_data = pd.read_stata('./data/pew_research_center_june_elect_wknd_data.dta')
+
+#Paso 1: Se agrupa por estado para obtener el número de encuestas realizadas en cada estada
+state = poll_data.groupby(by='state').count()
+state.reset_index(inplace=True)
+state = state[['state', 'survey']]
+
+#Paso 2: Se agrupa por estado e ideología para filtrar encuestas very liberal
+ideo = poll_data.groupby(by=['state','ideo']).count()
+ideo.reset_index(inplace=True)
+ideo = ideo[['state', 'ideo', 'survey']]
+very_liberal = ideo.loc[ideo['ideo'] == 'very liberal']
+
+#Paso 3: Se unen los dos conjuntos anteriores
+prop = pd.merge(left=state,
+                right=very_liberal,
+                how='left',
+                on='state',
+                suffixes=('_total','_very_lib'))
+
+#Paso 4: Se crea obtiene la proporción de very libera de máxima verosimilitud por estado
+prop['prop_mle'] = prop['survey_very_lib'] / prop['survey_total']
+
+#Paso 5: Se eliminan estados que no son de interés
+prop = prop[~prop['state'].isin(['washington dc', 'hawaii', 'alaska'])]
+prop.head()
+```
+
+<div style="text-align: justify">
+Algunas cosas que se pueden destacar de la tabla anterior, es que a pesar de que algunos estados pudieran presentar la misma proporción de _very liberal_, no necesariamente representa una cantidad significativa de votantes ya que esto depende de la población de cada estado. Tal es el caso de California comparado con Colorado, en donde porcentualmente tienen proporciones similares con $6.3\%$ y $5.8\%$ respectivamente, pero en el total de encuestas California es mucho mayor.
+    
+Para tener idea del panorama de la proporción de _very liberal_ comparado con el número de encuestas para cada uno de los estados, se puede realizar la siguiente visualización:
+</div>
+
+```{python}
+#Scatter plot
+plt.figure(figsize=plot_settings['figsize'])
+plt.scatter(x=prop['survey_total'], y=prop['prop_mle'], s=100, color='red')
+
+#Anotaciones y estilo
+for idx in prop.index:
+    x = prop.loc[idx]['survey_total']
+    y = prop.loc[idx]['prop_mle']
+    s = prop.loc[idx]['state'].upper().replace(' ', '')[0:4]
+    plt.text(x=x, y=y, s=s, fontsize=plot_settings['annotation'], rotation=60)
+plt.title(r'Proporción $very\_liberal$ de máxima verosimilitud por estado', fontsize=plot_settings['title'])
+plt.xlabel('Número de encuestas realizadas', fontsize=plot_settings['text'])
+plt.ylabel('Proporción', fontsize=plot_settings['text'])
+plt.grid(alpha=0.2)
+
+plt.show()
+```
+
