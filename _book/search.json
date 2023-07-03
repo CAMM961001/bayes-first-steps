@@ -21,20 +21,6 @@
     "text": "El problema\n\nComo es bien sabido, la elección de Estados Unidos en el 2008 la ganó el candidato presidencial por el partido demócrata, Barack Obama. Se podría pensar que existe cierta correlación entre la proporción de votos que recibió Obama, con la proporción de votantes que se identifican liberales en cada estado, por lo que para ilustrar ambos enfoques, se realizará una comparación entre la proporción de la población de cada estado que tiene ideología política “muy liberal” (en lo subsecuente very liberal), contra el porcentaje de votos que recibió el candidato en cada estado.\nPara hacer dicha comparación se tienen dos conjuntos de datos, el primero de ellos es el de las encuestas realizadas a la ciudadanía del país, para el cual cada registro es una persona encuestada, y son de interés las siguientes variables:\n\nstate: Estado en el que se realizó la encuesta.\nsurvey: Identificador de la encuesta aplicada en cada registro.\nideo: Ideología política del encuestado.\n\nEl segundo de ellos contiene los resultados de la elección por estado, para el cual el foco de atención estará en las variables a continuación:\n\nstate: Estado de referencia.\nvote_Obama_pct: Porcentaje de votos por Obama."
   },
   {
-    "objectID": "chapters/english.html#introducción",
-    "href": "chapters/english.html#introducción",
-    "title": "A bayesian approach",
-    "section": "Introducción",
-    "text": "Introducción\nCuando empecé mi trayectoria como científico de datos tenía escaso conocimiento de lenguajes de programación, modelos de aprendizaje de máquina, análisis exploratorio de datos, etc. En un inicio imaginaba que la analítica de datos iba más por el camino de los sistemas, el poder computacional, y los algoritmos, pero nunca imaginé que tuviera algo que ver con estadística. Para mí la estadística era una materia más con la que se tenía que cumplir en la carrera, la veía como algo arcaico incluso tedioso. Poco imaginaba que años después terminaría siendo de mis temas favoritos, que encontraría fascinante el inmenso mundo del que se trata, y que me daría cuenta del enorme abanico de aplicaciones que tiene.\nEn este breve ensayo intento mostrar, con un ejemplo aplicado, las diferencias entre un enfoque frecuentista y un enfoque bayesiano. Cabe destacar que es la opinión de una persona que empieza a adentrarse en el mundo de la estadística bayesiana, que considera que la mejor manera de asimilar el conocimiento es compartiéndolo, y que por tanto está haciendo un esfuerzo por transmitir sus primeras impresiones e intuiciones del tema.\nEl ejemplo que utilizaré para mostrar los conceptos es con datos de encuestas realizadas para la elección presidencial del 2008 en Estados Unidos, mismos que se pueden encontrar en el portal de Pew Research Center. Este ejemplo fue extraido del libro Bayesian Data Analysis, Andrew Gelman, 3° edición - p. 61, y es una expansión de un trabajo realizado para la materia de Fundamentos de estadística impartida en la Maestría en Ciencia de Datos del ITAM , por quien rápidamente se posicionaría como una de las mejores profesoras que he tenido en mi trayectoria profesional, Teresa Ortiz"
-  },
-  {
-    "objectID": "chapters/english.html#el-problema",
-    "href": "chapters/english.html#el-problema",
-    "title": "A bayesian approach",
-    "section": "El problema",
-    "text": "El problema\nComo es bien sabido, la elección de Estados Unidos en el 2008 la ganó el candidato presidencial por el partido demócrata, Barack Obama. Se podría pensar que existe cierta correlación entre la proporción de votos que recibió Obama, con la proporción de votantes que se identifican liberales en cada estado, por lo que para ilustrar ambos enfoques, se realizará una comparación entre la proporción de la población de cada estado que tiene ideología política “muy liberal” (en lo subsecuente very liberal), contra el porcentaje de votos que recibió el candidato en cada estado.\nPara hacer dicha comparación se tienen dos conjuntos de datos, el primero de ellos es el de las encuestas realizadas a la ciudadanía del país, para el cual cada registro es una persona encuestada, y son de interés las siguientes variables:\n\nstate: Estado en el que se realizó la encuesta.\nsurvey: Identificador de la encuesta aplicada en cada registro.\nideo: Ideología política del encuestado.\n\nEl segundo de ellos contiene los resultados de la elección por estado, para el cual el foco de atención estará en las variables a continuación:\n\nstate: Estado de referencia.\nvote_Obama_pct: Porcentaje de votos por Obama."
-  },
-  {
     "objectID": "index.html#enfoque-frecuentista",
     "href": "index.html#enfoque-frecuentista",
     "title": "Un Enfoque Bayesiano",
@@ -54,20 +40,6 @@
     "title": "Un Enfoque Bayesiano",
     "section": "Finalmente",
     "text": "Finalmente\n\nCon este sencillo ejemplo es posible darse cuenta de las diferencias que hay entre ambos enfoques. Al mismo tiempo, también se puede indentificar el enorme potencial que tiene un enfoque bayesiano ya que, en principio, incorpora mayor cantidad de información al respecto de un tema, no nada más los datos. Sin embargo, esta propiedad que en principio puediera ser una virtud, también es el punto débil del mundo bayesiano, debido a que si la información inicial es incorrecta o está sesgada hacia alguna opinión parcial, se puede caer en errores sumamente graves o tendenciosos. Es precisamente en este punto en el que está la mayor crítica a los enfoques bayesianos."
-  },
-  {
-    "objectID": "index.html#anexo-1",
-    "href": "index.html#anexo-1",
-    "title": "Un enfoque bayesiano",
-    "section": "Anexo 1",
-    "text": "Anexo 1\nMáxima verosimilitud de una distribución binomial (\\(n=1\\)):\nSean \\(X = \\{x_1,x_2,...,x_n\\}\\) muestras de una variable aleatoria independiente e idénticamente distribuida que siguen una distribución \\(x_i \\backsim B(k=1, p=\\theta)\\) siendo \\(k\\) el número de repeticiones del experimento, entonces:\nProbabilidad:\n\\[P(x_i|\\theta)=\\binom{1}{x_i}\\theta^{x_i}(1-\\theta)^{1-x_i}=\\theta^{x_i}(1-\\theta)^{1-x_i}\\]\nVerosimilitud:\n\\[L(\\theta|X)=\\prod_{i=1}^n P(x_i|\\theta)=\\prod_{i=1}^n\\left[\\theta^{x_i}(1-\\theta)^{1-x_i}\\right]\\]\nLog-verosimilitud:\n\\[ln[L(\\theta|X)]=\\sum_{i=1}^nln\\left[\\theta^{x_i}(1-\\theta)^{1-x_i}\\right]=ln\\theta\\sum x_i+ln(1-\\theta)\\sum(1-x_i)\\]\nDerivando e igualando a cero:\n\\[\\frac{\\partial}{\\partial\\theta}ln[L(\\theta|X)]=\\frac{1}{\\theta}\\sum x_i-\\frac{1}{1-\\theta}\\sum(1-x_i)=0\\]\n\\[(1-\\theta)\\sum x_i-\\theta\\sum(1-x_i)=0\\]\n\\[\\sum x_i - \\theta n  = 0\\]\n\\[\\therefore\\theta=\\frac{1}{n}\\sum_{i=1}^n x_i=\\bar x\\]\nEs decir:\n\\[\\theta=\\bar x\\]"
-  },
-  {
-    "objectID": "index.html#anexo-2",
-    "href": "index.html#anexo-2",
-    "title": "Un enfoque bayesiano",
-    "section": "Anexo 2",
-    "text": "Anexo 2\nUtilizando el módulo de python sympy para cálculo simbólico, se obtuvieron las ecuaciones que resulven los parámetros \\(a\\), \\(b\\) de una distribución conjugada beta-binomial dados los valores de \\(\\mu\\), \\(\\sigma\\)."
   },
   {
     "objectID": "index.html#máxima-verosimilitud-de-una-binomial",
