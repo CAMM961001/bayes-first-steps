@@ -50,7 +50,9 @@ $$\theta = \bar x$$
 
 En el caso del ejemplo, se puede obtener dicho estimador de proporción (`prop_mle`) utilizando el total de las encuestas realizadas en un estado (`survey_total`), y el total de encuestados que se identificaron _very liberal_ (`survey_very_lib`) en su ideología política. Esto se observa con mayor detalle en la siguiente tabla, misma que por simplicidad solamente muestra los primeros cinco estados.
 
-**Nota**: La demostración del estimador $\theta$ se puede encontrar en el Anexo 1.
+::: {.callout-note}
+La demostración del estimador $\theta$ se puede encontrar en el Anexo 1.
+:::
 </div>
 
 ```{python}
