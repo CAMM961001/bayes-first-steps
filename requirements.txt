@@ -3,4 +3,4 @@ pandas
 matplotlib
 scipy
 sympy
-jupyterlab
+jupyter
