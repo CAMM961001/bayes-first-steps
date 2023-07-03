@@ -8,7 +8,7 @@ from scipy.stats import beta
 plot_settings = {'title':12, 'text':10, 'annotation':6, 'figsize':(9,5)}
 ```
 
-# Un enfoque bayesiano {-}
+# Un Enfoque Bayesiano {-}
 
 Por [Miguel Ángel Castañeda Martínez.](https://www.linkedin.com/in/miguel-angel-castaneda-martinez-b0a566142?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3Bf123JtydS%2BmP67Z1hcyFDg%3D%3D)
 
