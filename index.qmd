@@ -225,11 +225,11 @@ for idx in range(k):
     a, b = get_beta_params(m, var_list[idx])
     
     #Distribución inicial
-    inicial = beta.rvs(a=a, b=b, size=sims)
+    inicial = beta.rvs(a=a, b=b, size=sims, random_state=202803)
     inicial_mean = inicial.mean()
     
     #Distribución posterior
-    posterior = beta.rvs(a=(a+x), b=(b+n-x), size=sims)
+    posterior = beta.rvs(a=(a+x), b=(b+n-x), size=sims, random_state=202803)
     
     #Gráficas
     ax_n = f"ax{idx}"
@@ -268,7 +268,7 @@ a, b = get_beta_params(m, s2)
 
 #Parámetros de simulación
 sims = 1_000
-inicial = beta.rvs(a=a, b=b, size=sims)
+inicial = beta.rvs(a=a, b=b, size=sims, random_state=202803)
 inicial_mean = inicial.mean()
 
 #Parámetros de panel
@@ -285,7 +285,7 @@ for idx in states_idx:
     #Cálculo de la posterior
     n = prop.loc[idx]['survey_total']
     x = prop.loc[idx]['survey_very_lib']
-    posterior = beta.rvs(a=(a+x), b=(b+n-x), size=sims)
+    posterior = beta.rvs(a=(a+x), b=(b+n-x), size=sims, random_state=202803)
     
     #Gráficas
     ax_n = f"ax{k}"
@@ -328,7 +328,7 @@ for idx in prop.index:
     #Cálculo de la posterior
     n = prop.loc[idx]['survey_total']
     x = prop.loc[idx]['survey_very_lib']
-    posterior_mean = beta.rvs(a=(a+x), b=(b+n-x), size=sims).mean()
+    posterior_mean = beta.rvs(a=(a+x), b=(b+n-x), size=sims, random_state=202803).mean()
     
     prop.loc[prop.index == idx, 'prop_bayes'] = posterior_mean
 
